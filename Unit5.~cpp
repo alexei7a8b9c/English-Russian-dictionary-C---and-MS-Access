@@ -1,0 +1,43 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Unit5.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm5 *Form5;
+//---------------------------------------------------------------------------
+__fastcall TForm5::TForm5(TComponent* Owner)
+        : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::DBGrid1TitleClick(TColumn *Column)
+{
+ if (ADOTable1->Active)
+  if ((ADOTable1->Sort.Pos(Column->FieldName) > 0) && (ADOTable1->Sort.Pos("ASC") > 0))
+     ADOTable1->Sort = Column->FieldName + " DESC";
+   else ADOTable1->Sort = Column->FieldName + " ASC";         
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::Button1Click(TObject *Sender)
+{
+if (Edit1->Text!="")
+{
+ADOTable1->Filtered=false;
+ADOTable1->Filter = "predlog like %" + Edit1->Text + "%";
+ADOTable1->Filtered=true;
+}
+Edit1->Clear();        
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm5::Button2Click(TObject *Sender)
+{
+Form5->ADOTable1->Filtered=false;        
+}
+//---------------------------------------------------------------------------
+
